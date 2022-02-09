@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-
+import 'package:revisao/Usuario_page.dart';
+import 'package:revisao/input_field.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
-
 class _LoginPageState extends State<LoginPage> {
   bool ver = false;
  @override
@@ -22,38 +22,35 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                       _inputField("Email",Icons.email, false),
                       _inputField("Senha",Icons.password, true),
-                        SizedBox(height: 20,),
-                        ElevatedButton(onPressed:() {},child: Text("ENTER"))
-            
+                        SizedBox(height: 20,
+                        ),
+                        _botaoEntrar(),        
+                        _botaoCadastrar(),             
                   ],
                   ),
                   ),
               ),
             );
   }
-
-  _inputField(String rotulo, IconData icone, bool senha) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom:16.0),
-      child: TextFormField(
-        obscureText:senha && !ver,
-        decoration:
-        InputDecoration(labelText: rotulo,
-        border:OutlineInputBorder(),
-        prefixIcon: Icon(icone),
-        suffixIcon: senha
-          ? IconButton(
-            onPressed: () {
-            setState(() {
-            ver = !ver;
-          });
-          },
-           icon: Icon(ver?Icons.visibility_off : Icons.visibility))
-          :null),
-
-      ),
-
-    );
-
-  }
+    _inputField(String rotulo, IconData icone, bool senha) {
+    return InputField(rotulo, icone, senha);
 }
+  _botaoEntrar() { return Row(
+     children: [
+          Expanded(
+            child:ElevatedButton(onPressed:() {}, 
+                                child : Text("Entrar"))),
+                              ],
+                              );}
+  _botaoCadastrar() {return  Padding(
+        padding: const EdgeInsets.all(8.0),
+        child:Row(mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          Text("Não tenho uma conta. "),
+          TextButton(onPressed: (){
+            Navigator.of(context).push( MaterialPageRoute(builder: (context)=>UsuarioPage() ) );
+          }, child: Text("Cadastre-se"))
+          ],
+        ),
+      );
+      }
